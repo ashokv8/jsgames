@@ -1,0 +1,50 @@
+body{
+    background-color: #ECD078;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+#container{
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* background-color: #767162; */
+}
+#title{
+    width: 500px;
+    font-family: "Great Vibes", cursive; 
+    font-size: 165px; 
+    line-height: 160px; 
+    font-weight: normal; 
+    margin-bottom: 20px; 
+    margin-top: 40px; 
+    text-align: center; 
+    text-shadow: 0 1px 1px #fff;
+    color:#D95B43;
+}
+.playbutton{
+    margin:auto;
+    width: 300px;
+    font-weight: bolder;
+    font-size: 30px;
+    color:darkcyan;
+    background-color: transparent;
+    box-shadow: 0px 5px rgba(7, 65, 65, 0.15);
+    border: 5px solid darkcyan;
+}
+.playbutton:hover{
+    transform: translateY(7px);
+    box-shadow: 0px 1px rgba(7, 65, 65, 0.15);
+    transition: 0.2s;
+}
+.centered-element {
+    margin: 10px;
+    padding: 20px;
+    border-radius: 8px;
+  }
+.example{
+    transform: scale(2);
+}
