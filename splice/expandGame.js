@@ -215,10 +215,10 @@ generateButton.addEventListener("click", ()=>{
     // divide into 4 parts 3/10 parts with low probability, 3-6/10 parts medium , 6-9/10 high probabilyt ,10/10 part medium probability
     let squareVal = myBoardSize * myBoardSize;
     if([2,3,4].includes(myBoardSize)){
-        noOfMoves = generateRandomNumber(1,squareVal);
+        noOfMoves = generateRandomNumber(0.6,squareVal);
     }
     if([5,6].includes(myBoardSize)){
-        noOfMoves = generateRandomNumber(0.7,squareVal);
+        noOfMoves = generateRandomNumber(0.5,squareVal);
     }
     if([7,8,9,10].includes(myBoardSize)){
         noOfMoves = generateRandomNumber(0.5,squareVal);

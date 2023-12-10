@@ -1,0 +1,61 @@
+body{
+    margin: 0;
+    padding: 0;
+    background-color: rgb(22, 20, 24);
+}
+.wholeContainer{
+    display:flex;
+    flex-direction: column;
+    height: 100%;
+    width:100%;
+}
+.title{
+    font-family: 'Courier New', Courier, monospace;
+    color: #828183;
+    text-align: center;
+    margin: auto;
+    padding-top: 50px;
+    font-size: 120px;
+    font-weight: 1500px;
+    height: 100px;
+    vertical-align: text-bottom;
+}
+/* All Games Container */
+.gamesContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+/* Single Game Button */
+.gameButton{
+    width: 200px;
+    height: 250px;
+    margin-top: 50px;
+    margin-bottom: 25px;
+    border: 3px solid #ffffff44;
+    transition: 0.2s;
+    background-color: #282c346e;
+    background: linear-gradient(0deg, rgba(40,44,52,1) 0%, rgba(17,0,32,.5) 100%);
+    box-shadow: 0 7px 20px 5px #00000088;
+    color: #828183;
+    font-size: 40px;
+    text-align: center;
+}
+.gameButton:hover{
+    border: 3px solid #ffffff96;
+    color : #ffffff96;
+    box-shadow: 0px 10px 10px 5px #000000aa;
+    transform: scale(1.1);
+    transition: 0.3s;
+}
+.textContent{
+    font-family: fantasy;
+    font-size: 35px;
+}
+svg{
+    margin-left: 10px;
+    margin-right: 10px;
+    transform:scale(2);
+}
