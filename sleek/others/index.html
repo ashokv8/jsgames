@@ -1,0 +1,535 @@
+<html>
+    <head>
+        <style>
+            .mainContainer{
+                background-color: beige;
+                width: 300px;
+                height: 300px;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+            .gameContainer{
+                display: grid;
+                /* grid-template-columns: auto auto auto auto auto; */
+                background-color: aliceblue;
+                border: 1px solid black;
+                gap: 2px;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                border: 20px double salmon;
+                border-radius: 10px;
+                padding: 10px;
+            }
+            .tile{
+                /* margin: 1px; */
+                width: 25px;
+                height: 25px;
+                /* border: 1px solid salmon; */
+                background-color: aquamarine;
+                /* border: 1px; */
+                border-radius: 3px;
+                
+            }
+            .selected{
+                background-color: cadetblue;
+            }
+            .blacked{
+                background-color:black;
+            }
+            .path{
+                background-color: palevioletred;
+            }
+            .border_bottom{
+                border-bottom: 3px solid salmon;
+            }
+            .border_left{
+                border-left: 3px solid salmon;
+            }
+            .border_right{
+                border-right: 3px solid salmon;
+            }
+            .border_top{
+                border-top: 3px solid salmon;
+            }
+            .transparent_bottom{
+                border-bottom: 1px solid transparent;
+            }
+            .transparent_left{
+                border-left: 1px solid transparent;
+            }
+            .transparent_right{
+                border-right: 1px solid transparent;
+            }
+            .transparent_top{
+                border-top: 1px solid transparent;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="mainContainer">
+            <div id="gameContainer" class="gameContainer">
+
+            </div>
+        </div>
+
+        <script>
+            /* Global Variables*/
+            let gridSize = 20;
+            let gameContainer = document.getElementById("gameContainer");
+            let startPosition = {'x':0, 'y':0};
+            let allTiles = [];
+
+            let ctrlPressed = false;
+            let altPressed = false;
+
+            function setGridTemplate(){
+                let gridString = '';
+                for(let i=0;i<gridSize;i++){
+                    gridString+="auto "
+                }
+                gameContainer.style.gridTemplateColumns = gridString;
+            }
+            
+            function addGrid(){
+                // console.log("Grid Size",gridSize);
+                for(let i=0;i<gridSize;i++){
+                    let tileRow = [];
+                    for(let j=0;j<gridSize;j++){
+                        let tempTile = document.createElement("div");
+                        let arrayPos = (i*gridSize)+j;
+                        tempTile.setAttribute("class","tile");
+                        tempTile.setAttribute("id","Tile_"+arrayPos);
+                        tempTile.setAttribute("x",i);
+                        tempTile.setAttribute("y",j);
+                        tempTile.setAttribute("pos",arrayPos);
+                        // Set Blacked
+                        tempTile.addEventListener("mouseenter",()=>{blackSquare(tempTile);})
+                        
+                        // console.log("TILE_",arrayPos)
+                        gameContainer.appendChild(tempTile);
+                        tileRow.push(tempTile);
+                    }
+                    allTiles.push(tileRow);
+                }
+                triggerStart()
+            }
+            function triggerStart(){
+                let getX = startPosition['x'];
+                let getY = startPosition['y'];
+                let getPos = (getX * gridSize) + getY;
+                let getPosId = "Tile_"+(getPos);
+                
+                let currentElement = document.getElementById(getPosId);
+                console.log("Starting ....",getPosId,currentElement);
+                currentElement.setAttribute("class","tile selected");
+            }
+
+            function resetCurrent(){
+                // Makes the current Element as unselected
+                let currentPos = (startPosition['x'] * gridSize) + startPosition['y'];
+                let currentElement = document.getElementById("Tile_"+currentPos);
+                currentElement.setAttribute("class","tile");
+            }
+            function moveChar(direction){
+                resetCurrent()
+                if (direction =="Left"){
+                    let nextPosX = startPosition['x'];
+                    let nextPosY = startPosition['y']-1;
+                    if(nextPosY <= -1){
+                        return;
+                    }
+                    else{
+                        let nextPos = (nextPosX * gridSize) + nextPosY;
+                        let nextElement = document.getElementById("Tile_"+nextPos);
+                        if(nextElement.getAttribute('class') =='tile'){
+                            nextElement.setAttribute("class","tile selected");
+                        }else{
+                            nextElement.setAttribute("class","tile");
+                        }
+                        startPosition['x'] = nextPosX;
+                        startPosition['y'] = nextPosY;
+                        
+                    }
+                }
+                else if (direction =="Right"){
+                    let nextPosX = startPosition['x'];
+                    let nextPosY = startPosition['y']+1;
+                    if(nextPosY >=gridSize){
+                        return;
+                    }
+                    else{
+                        let nextPos = (nextPosX * gridSize) + nextPosY;
+                        let nextElement = document.getElementById("Tile_"+nextPos);
+                        if(nextElement.getAttribute('class') =='tile'){
+                            nextElement.setAttribute("class","tile selected");
+                        }else{
+                            nextElement.setAttribute("class","tile");
+                        }
+                        startPosition['x'] = nextPosX;
+                        startPosition['y'] = nextPosY;
+                        
+                    }
+                }
+                else if (direction =="Down"){
+                    let nextPosX = startPosition['x']+1;
+                    let nextPosY = startPosition['y'];
+                    if(nextPosX >= gridSize){
+                        return;
+                    }
+                    else{
+                        let nextPos = (nextPosX * gridSize) + nextPosY;
+                        let nextElement = document.getElementById("Tile_"+nextPos);
+                        if(nextElement.getAttribute('class') =='tile'){
+                            nextElement.setAttribute("class","tile selected");
+                        }else{
+                            nextElement.setAttribute("class","tile");
+                        }
+                        startPosition['x'] = nextPosX;
+                        startPosition['y'] = nextPosY;
+                        
+                    }
+                }
+                else if (direction =="Up"){
+                    let nextPosX = startPosition['x']-1 ;
+                    let nextPosY = startPosition['y'];
+                    if(nextPosX <= -1){
+                        return;
+                    }
+                    else{
+                        let nextPos = (nextPosX * gridSize) + nextPosY;
+                        let nextElement = document.getElementById("Tile_"+nextPos);
+                        if(nextElement.getAttribute('class') =='tile'){
+                            nextElement.setAttribute("class","tile selected");
+                        }else{
+                            nextElement.setAttribute("class","tile");
+                        }
+                        startPosition['x'] = nextPosX;
+                        startPosition['y'] = nextPosY;
+                    }
+                }
+            }
+
+            function handleKeyDown(event){
+                console.log("Key Clicked",event.key);
+                if(event.key =="ArrowLeft"){
+                    // console.log("Moving Left ...")
+                    moveChar("Left");
+                }
+                if(event.key == "ArrowRight"){
+                    // console.log("Moving Right ...")
+                    moveChar("Right")
+                }
+                if(event.key == "ArrowUp"){
+                    // console.log("Moving Up ...")
+                    moveChar("Up")
+                }
+                if(event.key == "ArrowDown"){
+                    // console.log("Moving Down ...")
+                    moveChar("Down")
+                }
+
+            }
+            
+            function setupEventListeners(){
+                document.addEventListener("keydown",handleKeyDown);
+                document.addEventListener("keydown",(event)=>{
+                    // console.log("Mouse is pressed");
+                    if(event.key == "z"){
+                        console.log("Control is pressed");
+                        ctrlPressed = true;
+                    }
+                    if(event.key == "c"){
+                        altPressed = true;
+                    }
+                    
+                });
+                document.addEventListener("keyup",(event)=>{
+                    // console.log("Mouse is released");
+                    if(event.key == "z"){
+                        console.log("Control is releeased");
+                        ctrlPressed = false;
+                    }
+                    if(event.key == "c"){
+                        altPressed = false;
+                    }
+                    if(event.key=="x"){
+                        getMatrixFromImage();
+                    }
+                })
+            }
+
+            function initFunctions(){
+                setGridTemplate()
+                addGrid()
+                triggerStart()
+                setupEventListeners()
+            }
+            initFunctions()
+
+
+
+            /**/
+            function blackSquare(myButton){
+                // Make a square as black
+                if(ctrlPressed == true){
+                    // console.log("Blacking Tilke")
+                    myButton.setAttribute("class","tile blacked");
+                }
+                if(altPressed == true){
+                    myButton.setAttribute("class","tile");
+                }
+            }
+
+            function getMatrixFromImage(){
+                let resultMatrix =[];
+                let resultPos = [];
+                for(let i=0;i<gridSize;i++){
+                    let matrixRow = [];
+                    for(let j=0;j<gridSize;j++){
+                        if(allTiles[i][j].getAttribute("class").includes('blacked'))
+                        {
+                            matrixRow.push(1);
+                            resultPos.push((i*gridSize)+j);
+                        }else{
+                            matrixRow.push(0);
+                        }
+                    }
+                    resultMatrix.push(matrixRow);
+                }
+                // console.log("Result Matrix \n",resultMatrix);
+                let resultString ="";
+                resultPos.forEach(elem =>{
+                    resultString +=elem+",";
+                })
+                console.log("Result String",resultString);
+                // console.log(resultPos);
+                
+            }
+
+            function getRow(pos){
+                return Math.floor(pos / gridSize);
+            }
+            function getColumn(pos){
+                return Math.floor(pos % gridSize);
+            }
+
+            function simpleGeneratePath(){ // NOT_NEEDED
+                /* Generate a random path from start to end*/
+                let matrixSize = gridSize*gridSize;
+                let startPoint = Math.floor(Math.random() * gridSize); // StartPoint is always in the top half
+                let endPoint = Math.floor(Math.random() * gridSize) + gridSize; // endPoint is always bottom half
+                let matrixPath =[];
+                console.log("Start Point",startPoint,"Endpoit",endPoint)
+                let moves = 0;
+
+                let currentPoint = startPoint;
+                while(currentPoint !=endPoint  && moves < 1000){
+                    moves+=1;
+                    let moveSteps = Math.floor(Math.random() *5)+1; // 1 to 5
+                    let direction = Math.floor(Math.random() *4); // 0 to 4
+                    console.log("Direction ",direction, "Steps",moveSteps);
+                    for(let i=0;i<moveSteps;i++){
+                        moves+=1;
+                        if(direction ==0){
+                            let newPoint = currentPoint -1; // Move left
+                            console.log("NEwpoint",newPoint);
+                            if (newPoint <0){
+                                break;
+                            }
+                            else{
+                                matrixPath.push(newPoint);
+                                currentPoint = newPoint;
+                            }
+                        }
+                        else if (direction == 1){
+                            let newPoint = currentPoint +1; // Move right
+                            console.log("NEwpoint",newPoint);
+                            if (newPoint >= gridSize){
+                                break;
+                            }
+                            else{
+                                matrixPath.push(newPoint);
+                                currentPoint = newPoint;
+                            }
+
+                        }
+                        else if (direction == 2){
+                            let newPoint = currentPoint - gridSize; // Move Up
+                            console.log("NEwpoint",newPoint);
+                            if (newPoint < 0){
+                                break;
+                            }
+                            else{
+                                matrixPath.push(newPoint);
+                                currentPoint = newPoint;
+                            }
+
+                        }
+                        else if (direction == 3){
+                            let newPoint = currentPoint + gridSize; // Move Down
+                            console.log("NEwpoint",newPoint);
+                            if (newPoint >= gridSize){
+                                break;
+                            }
+                            else{
+                                matrixPath.push(newPoint);
+                                currentPoint = newPoint;
+                            }
+
+                        }
+                    }
+                }
+                let arraySet = new Set(matrixPath);
+                arraySet.forEach(elem =>{
+                    let tempElem = document.getElementById("Tile_"+elem);
+                    tempElem.setAttribute("class","tile path");
+                })
+                console.log("Matrix Path",arraySet)
+            }
+
+            // simpleGeneratePath()
+
+            function recursivePath(){
+                let newMatrix = []
+                let pathCount = 0;
+                for(let i=0;i<gridSize;i++){
+                    let newRow = [];
+                    for(let j=0;j<gridSize;j++)
+                    {
+                        let arrPos = (i*gridSize)+j
+                        let cell = {
+                            'x':i,
+                            'y':j,
+                            'arrPos': arrPos,
+                            'visited':0,
+                            'adjacent':[], // All adjacent elements
+                            'valid_adj':[] // direction you can move from a given cell after maze is generated
+                        }
+                        if( arrPos-1>=0 && getRow(arrPos) == getRow(arrPos-1) ){
+                            cell['adjacent'].push(arrPos-1); // left cell
+                        }
+                        if( arrPos+1<(gridSize*gridSize) && getRow(arrPos) == getRow(arrPos+1)){
+                            cell['adjacent'].push(arrPos+1); // right cell
+                        }
+                        if( arrPos-gridSize>=0 && getColumn(arrPos) == getColumn(arrPos-gridSize) ){
+                            cell['adjacent'].push(arrPos-gridSize); // up cell
+                        }
+                        if( arrPos+gridSize<(gridSize*gridSize) && getColumn(arrPos) == getColumn(arrPos+gridSize)){
+                            cell['adjacent'].push(arrPos+gridSize); // down cell
+                        }
+                        // console.log("CELL_"+arrPos,"INFO:");
+                        // console.log(cell);
+                        newRow.push(cell);
+                    }
+                    newMatrix.push(newRow);
+                }
+                // Starting Point
+                let start = Math.floor(Math.random() * (gridSize * gridSize));
+                let startX = getRow(start);
+                let startY = getColumn(start);
+                console.log("Starting Point",start,"X: ",startX,"Y: ",startY);
+                
+                function findPath(current,previous=null){
+                    let currentX = getRow(current);
+                    let currentY = getColumn(current);
+                    // console.log("=================== Current Node",current,"X",currentX,"Y:",currentY);
+                    let currentCell = newMatrix[currentX][currentY];
+                    // console.log("currentCell")
+                    console.log(currentCell)
+                    if(currentCell['visited'] == 1){
+                        // Alread visited
+                        return;
+                    }
+                    else{
+                        currentCell['visited'] = 1;
+                        let tempElement = document.getElementById("Tile_"+current);
+                        tempElement.innerHTML=""+pathCount;
+                        pathCount +=1;
+                        let allPossibleAdjLen = currentCell['adjacent'].length
+                        for(let i=0; i< allPossibleAdjLen; i++){
+                            
+                            // debugger;
+                            // console.log("BACK TO",tempElement.innerHTML);
+                            // console.log("RETURNED Current Node",current,"X",currentX,"Y:",currentY);
+                            let adjPos = Math.floor(Math.random() * (currentCell['adjacent'].length - 1))
+                            let randomAdj =currentCell['adjacent'].splice(adjPos,1);
+                            // console.log("RandomAdj",randomAdj,adjPos,currentCell['adjacent'])
+                            // console.log("Remaining Adjacents :::",currentCell['adjacent'],"Selected Node",randomAdj);
+                            randomAdj = randomAdj[0];
+                            
+                            randomX = getRow(randomAdj);
+                            randomY = getColumn(randomAdj);
+                            if (newMatrix[randomX][randomY]['visited'] == 0){
+                                console.log("############### ME: ",current,"Ajd",randomAdj)
+                                // currentCell['valid_adj'].push(randomAdj)
+                                newMatrix[currentX][currentY]['valid_adj'].push(randomAdj)
+                                findPath(randomAdj,currentCell['arrPos']);
+                            }
+                           
+                        }
+
+                        // After all Adjcent are visited
+                        // No adjcent nodes to visit
+                        if(previous){
+                            let currX = getRow(current);
+                            let currY = getColumn(current);
+                            console.log("PUSHING NEW MATRIX",newMatrix[currX][currY]['valid_adj'],previous)
+                            newMatrix[currX][currY]['valid_adj'].push(previous)
+                            // debugger;
+                        }
+                        return;
+                        
+                        
+                    }
+                }
+                findPath(start)
+
+                function printMatrix(){
+                    for(let i=0;i<gridSize;i++){
+                        for(let j=0;j<gridSize;j++){
+                            let borderSet = new Set(newMatrix[i][j]['valid_adj']);
+                            let currentElement = document.getElementById("Tile_"+newMatrix[i][j]['arrPos'])
+                            console.log("CELL _",i,j);
+                            console.log(newMatrix[i][j]);
+                            console.log("Current LEment",currentElement,borderSet)
+                            let temp = newMatrix[i][j]['arrPos']
+                            let allPos = "border_left border_right border_top border_bottom";
+                            let transparentBorder = "";
+                            borderSet.forEach(tempPos =>{
+                                if(tempPos == temp-1){
+                                    allPos= allPos.replace('border_left','');
+                                    transparentBorder += "transparent_left ";
+                                }
+                                else if (tempPos == temp +1){
+                                    allPos = allPos.replace('border_right','');
+                                    transparentBorder += "transparent_right ";
+                                }
+                                else if (tempPos == temp - gridSize){
+                                    allPos = allPos.replace('border_top','');
+                                    transparentBorder += "transparent_top ";
+                                }
+                                else if (tempPos == temp + gridSize){
+                                    allPos = allPos.replace('border_bottom','');
+                                    transparentBorder += "transparent_bottom ";
+                                }
+                                allPos = allPos.trim();
+                            })
+                            if(allPos.length >0){
+                                console.log("Classlist",currentElement.classList)
+                                currentElement.className = currentElement.className + " "+allPos
+                            }
+                            
+                        }
+                    }
+                }
+                printMatrix()
+            }
+
+            recursivePath()
+        </script>
+    </body>
+</html>

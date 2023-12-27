@@ -1,0 +1,40 @@
+:root {
+    --black : #3c3c3c;
+    --black3 : #6d6d6d36;
+    --black2: #2a2438;
+    --sky: #B7DFE7;
+    --violet1: #817C8E;
+    --violet2:#66636E;
+    --green:#394a51;
+    --greenT: #394a51ba;
+}
+
+#mainContainer{
+    /* width: 100px;
+    height:100px; */
+    position: absolute;
+    top: 50%;
+    left:50%;
+    transform: translate(-50%,-50%);
+    padding: 50px;
+    border: solid 10px var(--green);
+    background-color: var(--greenT);
+    border-radius: 50px;
+     box-shadow: 
+        10px 10px 0px 0px var(--violet1);
+    /*    -1px 10px 1px 0px var(--violet1)
+    ; */
+}
+body{
+    background-color: var(--black3);
+}
+
+#player{
+    transform: scale(0.6);
+}
+.visible{
+    display:block;
+}
+.invisible{
+    display: none;
+}
