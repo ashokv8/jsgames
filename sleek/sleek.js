@@ -365,11 +365,11 @@ function main(){
     resetButton.addEventListener('click',restartGame);
     addButton.addEventListener('click',() =>{
         setGridSize(1);
-        restartGame();
+        // restartGame();
     });
     subButton.addEventListener('click',()=>{
         setGridSize(-1);
-        restartGame();
+        // restartGame();
     });
 }
 
