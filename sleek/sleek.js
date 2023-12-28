@@ -319,6 +319,11 @@ function setWinText(enable){
     }
 }
 function setGridSize(val){
+    if( (val < 0 && gridSize <=2) || (val>0 && gridSize>=40)){
+        let gridSizeText= document.getElementById("sizeText");
+        gridSizeText.innerText="Maze Size : "+gridSize;
+        return
+    }
     gridSize +=val;
     let gridSizeText= document.getElementById("sizeText");
     gridSizeText.innerText="Maze Size : "+gridSize;
