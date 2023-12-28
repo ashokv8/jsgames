@@ -4,6 +4,12 @@ spliceGame.addEventListener("click", () =>{
     window.open('./splice/index.html', '_blank');
 })
 
+const sleekGame = document.getElementById("sleekGame");
+sleekGame.addEventListener("click", () =>{
+    console.log("Open Sleek Game ....")
+    window.open('./sleek/sleek.html', '_blank');
+})
+
 // Populate X
 /*
 const gameButton = document.getElementById("spliceGame");

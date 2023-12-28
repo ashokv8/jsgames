@@ -1,12 +1,15 @@
 :root {
     --black : #3c3c3c;
     --black3 : #6d6d6d36;
+    --black4 : #bababa;
     --black2: #2a2438;
     --sky: #B7DFE7;
     --violet1: #817C8E;
     --violet2:#66636E;
     --green:#394a51;
     --greenT: #394a51ba;
+    --yellow: #e47944;
+    --yellow2: #fdc57b;
 }
 
 #mainContainer{
@@ -25,6 +28,34 @@
     /*    -1px 10px 1px 0px var(--violet1)
     ; */
 }
+#buttonContainer{
+    position: absolute;
+    top:50%;
+    left :80%;
+    transform: translate(-50%,-50%);
+    height:400px;
+    width:200px;
+    /* background-color: #a58fdd; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    /* border: solid 1px black; */
+}
+#insContainer{
+    position: absolute;
+    top:50%;
+    left :20%;
+    transform: translate(-50%,-50%);
+    height:400px;
+    width:300px;
+    /* background-color: #a58fdd; */
+    /* border: solid 1px black; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
 body{
     background-color: var(--black3);
 }
@@ -36,5 +67,132 @@ body{
     display:block;
 }
 .invisible{
-    display: none;
+    display:none;
 }
+
+#loadingText {
+    position: fixed;
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    top:10%;
+    left:50%;
+    transform: translate(-50%,-50%);
+    border-radius: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 20%;
+    width:80%;
+    /* background-color:var(--greenT); */
+    z-index: 100;
+  }
+#lText{
+    font-size: 100px;
+    color: var(--yellow);
+}
+#winTextDiv{
+    position: fixed;
+    top:10%;
+    left:50%;
+    transform: translate(-50%,-50%);
+    border-radius: 20px;
+    display: none;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 20%;
+    width:80%;
+    /* background-color:var(--greenT); */
+    z-index: 100;
+}
+#winText{
+    font-size: 100px;
+    color: var(--yellow);
+}
+
+.optionButton{
+    width: 250px;
+    height: 50px;
+    font-size: 20px;
+    font-family: cursive;
+    box-shadow: 0px 5px #6c6776;
+    transition: 1s;
+    border: solid 1px #7b7784;
+    border-radius: 10px;
+    color:#6c6776;
+    margin-top: 30px;
+}
+.optionButton:hover{
+    font-size: 26px;
+    font-family: cursive;
+    font-variant-position: super;
+    color:#e47944;
+    transform: translateY(-5px);
+    transition: 0.2s ease;
+    width: 300px;
+    box-shadow: 0px 7px #ddb061;
+    border: solid 3px #e47944;
+    
+}
+
+#sizeText{
+    font-size: 20px;
+    font-family: cursive;
+    color:#6c6776;
+}
+
+.ins_headers{
+    font-family: 'Trebuchet MS',sans-serif;
+    font-weight: 600;
+    font-size: 26px;
+    color:#6c6776;
+
+}
+.ins_text{
+    font-family:  'Trebuchet MS',sans-serif;
+    font-size: 20px;
+    /* text-align: justify; */
+    color:#6c6776;
+}
+
+/* Solar System Loader */
+
+.pulse-container {
+    position: relative;
+    top:30px;
+    width: 100px;
+    height: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left:10px;
+  }
+  
+.pulse-bubble {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: var(--yellow);
+  }
+  
+.pulse-bubble-1 {
+      animation: pulse 0.6s ease 0s infinite alternate;
+  }
+.pulse-bubble-2 {
+      animation: pulse 0.6s ease .2s infinite alternate;
+  }
+.pulse-bubble-3 {
+      animation: pulse 0.6s ease .4s infinite alternate;
+  }
+@keyframes pulse {
+    from {
+      opacity: 1;
+      transform: scale(1);
+    }
+    to {
+      opacity: .25;
+      transform: scale(.50);
+    }
+  }

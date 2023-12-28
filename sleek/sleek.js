@@ -9,14 +9,18 @@ let colors = {
     'green1':'#394a51',
     'green-high':'#7fa99b',
     'yellow':'#fdc57b',
-    'red':'#b14e6f'
+    'red':'#b14e6f',
+    'orange': '#e47944'
 }
 let mainBody = document.getElementById("mainBody");
 let mainContainer = document.getElementById("mainContainer");
+let resetButton = document.getElementById("resetButton");
+let addButton = document.getElementById("addButton");
+let subButton = document.getElementById("subButton");
 let gameContainer;
-let gridSize = 15;
-let tileSize = 15;
-let borderSize =3.5;
+let gridSize = 20;
+let tileSize = 17;
+let borderSize =4;
 let borderColor = colors['yellow'];
 let borderShade = colors['black'];
 let squareColor = colors['green-high'];
@@ -25,13 +29,18 @@ let svgColor = colors['red'];
 
 // 
 let resultMatrix = null;
+let startPos = 0;
 let nowPos = 0;
+let nowDiv = null;
 let nowTile = null;
 let playerSVG = null;
 
+let endPos = 0;
+let endDiv = null;
+let endColor = colors['orange'];
+let playerCanMove = false;
 
-function createGameContainer(){
-    gameContainer = document.createElement("div");
+function getGameStyle(){
     let tempString = '';
     for(let i=0;i<gridSize;i++){
         tempString +='auto '
@@ -45,9 +54,16 @@ function createGameContainer(){
         // height:500px;
         grid-gap:${borderSize}px;
     `;
+    return gStyle;
+}
+function createGameContainer(){
+    gameContainer = document.createElement("div");
+    mainContainer.appendChild(gameContainer)
+}
+function updateGameContainer(){
+    let gStyle = getGameStyle();
     gStyle = getCssString(gStyle);
     gameContainer.setAttribute('style',gStyle);
-    mainContainer.appendChild(gameContainer)
 }
 function addTiles(){
     for(let i=0;i<gridSize;i++){
@@ -240,55 +256,136 @@ function getPlayerSVG(){
     // currentDiv.innerHTML = val;
     return currentDiv;
 }
+
 function handleKeyDown(event){
     console.log("Key Clicked",event.key);
-    let nowX = getX(nowPos);
-    let nowY = getY(nowPos);
+    console.log("PLAYER CAN MOVE",playerCanMove)
+    if (playerCanMove == false){
+        return
+    }
 
     if(event.key =="ArrowLeft"){
         // console.log("Moving Left ...")
         let tempPos = nowPos-1;
-        if (resultMatrix[nowX][nowY]['allowed_neighbors'].includes(tempPos)){
-            nextPos = document.getElementById("Tile_"+tempPos);
-            let playerIcon = nowPos.querySelector('.playerIcon');
-            playerIcon.setAttribute('class','playerIcon invisible');
-            let nextIcon = nextPos.querySelector('.playerIcon');
-        }
+        moveChar(tempPos);
     }
     if(event.key == "ArrowRight"){
         // console.log("Moving Right ...")
-        moveChar("Right")
+        let tempPos = nowPos+1;
+        moveChar(tempPos);       
     }
     if(event.key == "ArrowUp"){
         // console.log("Moving Up ...")
-        moveChar("Up")
+        let tempPos = nowPos-gridSize;
+        moveChar(tempPos);
     }
     if(event.key == "ArrowDown"){
         // console.log("Moving Down ...")
-        moveChar("Down")
+        let tempPos = nowPos+gridSize;
+        moveChar(tempPos);
+    }
+    if(nowPos == endPos){
+        console.log(" YOU WON ");
+        setWinText(true);
+        playerCanMove = false;
+    }
+    function moveChar(tempPos){
+        console.log("NOW POST",nowPos)
+        let nowX = getX(nowPos);
+        let nowY = getY(nowPos);
+        console.log("NOEW X",nowX,"NOW Y",nowY);
+        console.log("MATRIX",resultMatrix)
+        console.log("ALLOWER NEIGHBORS",resultMatrix[nowX][nowY]['allowed_neighbors']);
+        if (resultMatrix[nowX][nowY]['allowed_neighbors'].includes(tempPos)){
+            nowDiv = document.getElementById("Tile_"+nowPos);
+            let nextDiv = document.getElementById("Tile_"+tempPos);
+            let playerIcon = nowDiv.querySelector('.playerIcon');
+            playerIcon.setAttribute('class','playerIcon invisible');
+            console.log("PLAYER ICON CURRENT",playerIcon);
+            let nextIcon = nextDiv.querySelector('.playerIcon');
+            nextIcon.setAttribute('class','playerIcon visible');
+            console.log("PLAYER ICON NEXt",nextIcon)
+            nowPos = tempPos;
+        }
     }
 
 }
+function setWinText(enable){
+    let winTextDiv = document.getElementById('winTextDiv');
+    if(enable){
+        winTextDiv.style.display = 'flex';
+    }else{
+        winTextDiv.style.display = 'none';
+    }
+}
+function setGridSize(val){
+    gridSize +=val;
+    let gridSizeText= document.getElementById("sizeText");
+    gridSizeText.innerText="Maze Size : "+gridSize;
+}
 function main(){
     createGameContainer()
-
-
     function restartGame(){
-        addTiles()
-        resultMatrix = createMaze(gridSize);
-        populateNumber(resultMatrix);
-        setStart();
+        playerCanMove = false;
+        setGridSize(0);
+        updateGameContainer();
+        // gameContainer.innerHtml = "";
+        setWinText(false);
+        displayLoad(true);
+        removeAllChildNodes(gameContainer);
+        setTimeout( ()=>{
+            addTiles()
+            resultMatrix = createMaze(gridSize);
+            populateNumber(resultMatrix);
+            setStart();
+            setEnd();
+            displayLoad(false);
+            playerCanMove = true;
+        },1000);
+        
     }
 
     function setStart(){
         nowPos = Math.floor(Math.random() * (gridSize*gridSize));
-        nowPos = document.getElementById("Tile_"+nowPos);
-        let playerIcon = nowPos.querySelector('.playerIcon');
+        startPos = nowPos;
+        nowDiv = document.getElementById("Tile_"+nowPos);
+        let playerIcon = nowDiv.querySelector('.playerIcon');
         playerIcon.setAttribute('class','playerIcon visible');
     }
-
+    function setEnd(){
+        endPos = Math.floor(Math.random() * (gridSize*gridSize));
+        while(startPos == endPos){
+            endPos = Math.floor(Math.random() * (gridSize*gridSize));
+        }
+        endDiv = document.getElementById("Tile_"+endPos);
+        endDiv.style.backgroundColor = endColor;
+    }
     restartGame()
-
+    document.addEventListener('keydown',handleKeyDown);
+    resetButton.addEventListener('click',restartGame);
+    addButton.addEventListener('click',() =>{
+        setGridSize(1);
+        restartGame();
+    });
+    subButton.addEventListener('click',()=>{
+        setGridSize(-1);
+        restartGame();
+    });
 }
 
-main()
+
+function displayLoad(enable){
+    let loadingDiv = document.getElementById("loadingText");
+    if(enable){
+        loadingDiv.style.display = 'flex';
+    }else{
+        loadingDiv.style.display = 'none';
+    }
+    
+}
+
+setTimeout(function() { main() }, 2000);
+
+
+
+

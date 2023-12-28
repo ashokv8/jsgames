@@ -199,3 +199,24 @@ body{
   color: #ffffff;
   opacity: 75%;
 }
+
+
+.bottomInstructions{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: justify;
+  font-size: 20px;
+  /* background-color: red; */
+  width: 400px;
+  margin-bottom: 20px;
+  color: var(--green);
+  font-family: 'Trebuchet MS',sans-serif;
+}
+.insTitle{
+  font-family: 'Trebuchet MS',sans-serif;
+  font-size: 25px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}

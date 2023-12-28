@@ -3,8 +3,38 @@
         <link rel="stylesheet" href="sleek.css">
     </head>
     <body id="mainBody">
+        <div id="loadingText">
+            <p id="lText">Loading
+            <!-- <div class="spinner-box"> -->
+                <div class="pulse-container">  
+                  <div class="pulse-bubble pulse-bubble-1"></div>
+                  <div class="pulse-bubble pulse-bubble-2"></div>
+                  <div class="pulse-bubble pulse-bubble-3"></div>
+                </div>
+              <!-- </div> -->
+            </p>
+        </div>
+        <div id="winTextDiv">
+            <p id="winText">
+                You Won !!!
+            </p>
+        </div>
+        <div id="insContainer">
+            <p class ="ins_headers">Instructions</p>
+            <p class ="ins_text"> * Use <i>Arrow Keys</i> to move. <br><br>
+                * Reach the end of the maze to win.<br><br>
+                * Create a new maze by clicking generate maze button.<br><br>
+                * You can also increase or decrease the size of the maze.
+            </p>
+        </div>
         <div id="mainContainer"></div>
-
+        <div id="buttonContainer">
+            <!-- <p id="loading">Generating ...</p> -->
+            <p id="sizeText"></p>
+            <button id="resetButton" class="optionButton"> Generate Maze </button> 
+            <button id="addButton" class="optionButton"> Increase Maze Size</button>
+            <button id="subButton" class="optionButton"> Decrease Maze Size</button>
+        </div>
         <script src="./common/common.js"></script>
         <script src="./common/mazeGen.js"></script>
         <script src="./sleek.js"></script>
