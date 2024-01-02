@@ -1,0 +1,160 @@
+:root{
+    --tile_height: 400; 
+    --svg-color:#edecec;
+    
+    --left1:10;
+    --left2:150;
+    --left3:250;
+    --left4:400;
+
+}
+body{
+    /* background-color: #0E0D0E; */
+}
+.itemContainer{
+    position: absolute;
+    top:20%;
+    left:50%;
+    width: 300px;
+    height: 200px;
+    border: 2px solid salmon;
+    display: inline-block;
+}
+.item{
+    position: absolute;
+    top:20px;
+    width: 300px;
+    height: var(--tile_height);
+    border: rgb(74, 74, 55) 3px solid;
+    border-radius: 10px; 
+    /* background-color: rgb(161, 152, 152);   */
+}
+.item:nth-child(1){
+    transform: scale(1.2);
+    z-index: 9;
+    left: var(--left1);
+    animation: slideIn 1s ease-in-out;
+    /* animation-name: slideIn;
+    animation-duration: 1s; */
+    /* background-color: rgb(190, 185, 185);  */
+}
+.item:nth-child(2){
+    transform: scale(1.1);
+    z-index: 8;
+    left:var(--left2);
+    animation: slideLittle 1s ease-in-out;
+    /* animation-name: slideLittle;
+    animation-duration: 1s; */
+    /* background-color: rgb(169, 165, 165);  */
+ 
+}
+.item:nth-child(3){
+    z-index: 7;
+    left:var(--left3);
+    animation: slideOut 1s ease-in-out;
+    /* animation-name: slideOut;
+    animation-duration: 1s; */
+    /* background-color: rgba(192, 192, 192, 0.333);  */
+}
+
+@keyframes slideIn {
+    0% {
+        /* background-color: red; */
+        transform: scale(1.1);
+        left:var(--left2);
+    }
+    100% {
+        transform: scale(1.2);
+        /* background-color: yellow; */
+        left:var(--left1);
+    }
+  }
+@keyframes slideLittle {
+    0%{
+        transform: scale(1);
+        left:220;
+    }
+    100%{
+        transform: scale(1.1);
+        left:var(--left2);
+    }
+    
+}
+@keyframes slideOut {
+    0% {
+        /* background-color: red; */
+        transform: scale(1);
+        
+        left:var(--left1);
+    }
+    100% {
+        transform: scale(1);
+        
+        /* background-color: yellow; */
+        left:var(--left3);
+    }
+  }
+
+#item_1{
+    background-color: red;
+    /* background-image: url("images/space1.jpg"); */
+}
+#item_2{
+    background-color: blue;
+    /* background-image: url("images/space2.jpg"); */
+}
+#item_3{
+    background-color: green;
+    /* background-image: url("images/space3.jpg"); */
+}
+
+/* Left and Right Button CSS */
+.buttonContainer{
+    position: absolute;
+    top: 450;
+    background-color: burlywood;
+    width: 500px;
+    height: 60px;
+}
+.button-left{
+    background-color: var(--svg-color);
+    /* border: 1px solid var(--svg-color); */
+    border-radius: 25px;
+    width: 50px;
+    height: 50px;
+
+    position: absolute;
+    top: 50%;
+    left:35%;
+
+    transform: translate(0,-50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+.button-right{
+    background-color: var(--svg-color);
+    /* border: 1px solid var(--svg-color); */
+    border-radius: 25px;
+    width: 50px;
+    height: 50px;
+
+    position: absolute;
+    top: 50%;
+    left:55%;
+    display: flex;
+    transform: translate(0,-50%);
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+
+.button-left:hover{
+    background-color: slateblue;
+    border: 1px slateblue sold;
+}
+.button-right:hover{
+    background-color: slateblue;
+    border: 1px slateblue sold;
+}
