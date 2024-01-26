@@ -20,7 +20,7 @@ body{
     overflow: hidden;
 }
 .detailsContainer{
-    width: 900px;
+    width: 700px;
     height: 500px;
     /* border: 2px solid salmon; */
     position: absolute;
@@ -60,7 +60,7 @@ body{
 .details button{
     position:absolute;
     top:240px;
-    left:600px;
+    left:100px;
     padding:20px 80px;
     font-size: 20px;
     font-weight: bold;
